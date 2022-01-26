@@ -1,0 +1,290 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scenes/UI/TitleScreen/TitleScreenMenu.cs" type="Script" id=1]
+[ext_resource path="res://Resources/Textures/Backgrounds/workingTitleScreen.jpg" type="Texture" id=2]
+[ext_resource path="res://Scenes/UI/TitleScreen/TitleScreenSaveSlot.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Resources/Fonts/disposable_droid_bb_24.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Resources/Themes/game_theme.tres" type="Theme" id=5]
+[ext_resource path="res://Resources/Themes/Styles/panel_content_stylebox_flat_invert.tres" type="StyleBox" id=6]
+[ext_resource path="res://Scenes/UI/Components/Input/UIInput.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Resources/Fonts/disposable_droid_bb_12.tres" type="DynamicFont" id=11]
+
+[node name="TitleScreenMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 5 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PC_MainButtons" type="PanelContainer" parent="."]
+margin_left = 40.0
+margin_top = 80.0
+margin_right = 207.0
+margin_bottom = 283.0
+rect_min_size = Vector2( 170, 210 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB" type="VBoxContainer" parent="PC_MainButtons"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 166.0
+margin_bottom = 219.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 9
+
+[node name="GameTitle" type="Label" parent="PC_MainButtons/VB"]
+margin_right = 162.0
+margin_bottom = 51.0
+custom_fonts/font = ExtResource( 4 )
+text = "MineFarm
+Harvest Valley"
+align = 1
+valign = 1
+
+[node name="NewGameButton" type="Button" parent="PC_MainButtons/VB"]
+margin_top = 60.0
+margin_right = 162.0
+margin_bottom = 92.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 4 )
+custom_constants/hseparation = 0
+toggle_mode = true
+text = "New  Game"
+
+[node name="ContinueButton" type="Button" parent="PC_MainButtons/VB"]
+margin_top = 101.0
+margin_right = 162.0
+margin_bottom = 133.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 4 )
+toggle_mode = true
+text = "Continue"
+
+[node name="OptionsButton" type="Button" parent="PC_MainButtons/VB"]
+margin_top = 142.0
+margin_right = 162.0
+margin_bottom = 174.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 4 )
+toggle_mode = true
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="PC_MainButtons/VB"]
+margin_top = 183.0
+margin_right = 162.0
+margin_bottom = 215.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 4 )
+text = "Quit"
+
+[node name="PC_NewGameMenu" type="PanelContainer" parent="."]
+visible = false
+margin_left = 210.0
+margin_top = 80.0
+margin_right = 530.0
+margin_bottom = 290.0
+grow_vertical = 2
+rect_min_size = Vector2( 320, 210 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MC" type="MarginContainer" parent="PC_NewGameMenu"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 316.0
+margin_bottom = 206.0
+custom_constants/margin_bottom = 0
+
+[node name="VB" type="VBoxContainer" parent="PC_NewGameMenu/MC"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 308.0
+margin_bottom = 202.0
+rect_min_size = Vector2( 192, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TitleLabel" type="Label" parent="PC_NewGameMenu/MC/VB"]
+margin_right = 304.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 4 )
+text = "New Game"
+align = 1
+valign = 1
+
+[node name="HB_PlayerSlots" type="HBoxContainer" parent="PC_NewGameMenu/MC/VB"]
+margin_top = 28.0
+margin_right = 304.0
+margin_bottom = 170.0
+size_flags_vertical = 3
+custom_constants/separation = 20
+alignment = 1
+
+[node name="TextureButton_PlayerSlot1" parent="PC_NewGameMenu/MC/VB/HB_PlayerSlots" instance=ExtResource( 3 )]
+margin_left = 24.0
+margin_right = 96.0
+
+[node name="TextureButton_PlayerSlot2" parent="PC_NewGameMenu/MC/VB/HB_PlayerSlots" instance=ExtResource( 3 )]
+margin_left = 116.0
+margin_right = 188.0
+
+[node name="TextureButton_PlayerSlot3" parent="PC_NewGameMenu/MC/VB/HB_PlayerSlots" instance=ExtResource( 3 )]
+margin_left = 208.0
+margin_right = 280.0
+
+[node name="HB_Controls" type="HBoxContainer" parent="PC_NewGameMenu/MC/VB"]
+margin_top = 174.0
+margin_right = 304.0
+margin_bottom = 198.0
+rect_min_size = Vector2( 0, 24 )
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="UIInput_Navigation" parent="PC_NewGameMenu/MC/VB/HB_Controls" instance=ExtResource( 10 )]
+margin_left = 249.0
+margin_right = 266.0
+margin_bottom = 24.0
+Text = "Navigate"
+
+[node name="UIInput_Select" parent="PC_NewGameMenu/MC/VB/HB_Controls" instance=ExtResource( 10 )]
+margin_left = 268.0
+margin_right = 285.0
+margin_bottom = 24.0
+InputButton = 15
+Text = "Select Slot"
+
+[node name="UIInput_Back" parent="PC_NewGameMenu/MC/VB/HB_Controls" instance=ExtResource( 10 )]
+margin_left = 287.0
+margin_right = 304.0
+margin_bottom = 24.0
+InputButton = 16
+Text = "Back"
+
+[node name="PopupPanel_StartNewGame" type="PopupPanel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 144, 64 )
+rect_rotation = -0.0527772
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB" type="VBoxContainer" parent="PopupPanel_StartNewGame"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WhatIsYourNameLabel" type="Label" parent="PopupPanel_StartNewGame/VB"]
+margin_right = 136.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+size_flags_vertical = 5
+custom_fonts/font = ExtResource( 11 )
+text = "What is your name?"
+align = 1
+valign = 1
+
+[node name="CC" type="CenterContainer" parent="PopupPanel_StartNewGame/VB"]
+margin_top = 20.0
+margin_right = 136.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PlayerNameEdit" type="LineEdit" parent="PopupPanel_StartNewGame/VB/CC"]
+margin_left = 4.0
+margin_right = 132.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 128, 0 )
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Player"
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+caret_blink = true
+
+[node name="HB_Controls" type="HBoxContainer" parent="PopupPanel_StartNewGame/VB"]
+margin_top = 36.0
+margin_right = 136.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 24 )
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="UIInput_Select" parent="PopupPanel_StartNewGame/VB/HB_Controls" instance=ExtResource( 10 )]
+margin_left = 100.0
+margin_right = 117.0
+margin_bottom = 24.0
+InputButton = 15
+Text = "OK"
+
+[node name="UIInput_Back" parent="PopupPanel_StartNewGame/VB/HB_Controls" instance=ExtResource( 10 )]
+margin_left = 119.0
+margin_right = 136.0
+margin_bottom = 24.0
+InputButton = 16
+Text = "Back"
+
+[node name="GameVersionLabel" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 11 )
+custom_colors/font_color = Color( 0.662745, 0.662745, 0.662745, 1 )
+text = "Work in Progress
+First Playable
+Version 0.0.1
+AXiON@nodevinc.com"
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="toggled" from="PC_MainButtons/VB/NewGameButton" to="." method="_on_NewGameButton_toggled"]
+[connection signal="toggled" from="PC_MainButtons/VB/ContinueButton" to="." method="_on_ContinueButton_toggled"]
+[connection signal="toggled" from="PC_MainButtons/VB/OptionsButton" to="." method="_on_OptionsButton_toggled"]
+[connection signal="pressed" from="PC_MainButtons/VB/QuitButton" to="." method="_on_QuitButton_pressed"]
+
+[editable path="PC_NewGameMenu/MC/VB/HB_PlayerSlots/TextureButton_PlayerSlot1"]
+[editable path="PC_NewGameMenu/MC/VB/HB_PlayerSlots/TextureButton_PlayerSlot2"]
+[editable path="PC_NewGameMenu/MC/VB/HB_PlayerSlots/TextureButton_PlayerSlot3"]

@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/InventoryTab/InventoryCell.tscn" type="PackedScene" id=2]
+
+[node name="InventoryRow" type="CenterContainer"]
+margin_right = 216.0
+margin_bottom = 18.0
+mouse_filter = 1
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HB" type="HBoxContainer" parent="."]
+margin_right = 216.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton_CellBackground1" parent="HB" instance=ExtResource( 2 )]
+
+[node name="TextureButton_CellBackground2" parent="HB" instance=ExtResource( 2 )]
+margin_left = 22.0
+margin_right = 40.0
+
+[node name="TextureButton_CellBackground3" parent="HB" instance=ExtResource( 2 )]
+margin_left = 44.0
+margin_right = 62.0
+
+[node name="TextureButton_CellBackground4" parent="HB" instance=ExtResource( 2 )]
+margin_left = 66.0
+margin_right = 84.0
+
+[node name="TextureButton_CellBackground5" parent="HB" instance=ExtResource( 2 )]
+margin_left = 88.0
+margin_right = 106.0
+
+[node name="TextureButton_CellBackground6" parent="HB" instance=ExtResource( 2 )]
+margin_left = 110.0
+margin_right = 128.0
+
+[node name="TextureButton_CellBackground7" parent="HB" instance=ExtResource( 2 )]
+margin_left = 132.0
+margin_right = 150.0
+
+[node name="TextureButton_CellBackground8" parent="HB" instance=ExtResource( 2 )]
+margin_left = 154.0
+margin_right = 172.0
+
+[node name="TextureButton_CellBackground9" parent="HB" instance=ExtResource( 2 )]
+margin_left = 176.0
+margin_right = 194.0
+
+[node name="TextureButton_CellBackground10" parent="HB" instance=ExtResource( 2 )]
+margin_left = 198.0
+margin_right = 216.0

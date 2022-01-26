@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/UI/Components/DropDownMenu.cs" type="Script" id=1]
+[ext_resource path="res://Resources/Themes/ui_menu_theme_small_text.tres" type="Theme" id=2]
+
+[node name="ItemDropDownPopupMenu" type="PopupMenu"]
+margin_left = 4.0
+margin_top = 8.0
+margin_right = 24.0
+margin_bottom = 28.0
+popup_exclusive = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 99.0
+margin_bottom = 46.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewItemDetailsButton" type="Button" parent="VB"]
+margin_right = 119.0
+margin_bottom = 30.0
+theme = ExtResource( 2 )
+text = "Item Info"
+
+[node name="ConsumeButton" type="Button" parent="VB"]
+margin_top = 34.0
+margin_right = 119.0
+margin_bottom = 64.0
+theme = ExtResource( 2 )
+text = "Consume"

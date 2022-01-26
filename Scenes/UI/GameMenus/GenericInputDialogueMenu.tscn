@@ -1,0 +1,114 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Resources/Fonts/disposable_droid_bb_24.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scenes/UI/GameMenus/GenericInputDialogueMenu.cs" type="Script" id=2]
+[ext_resource path="res://Resources/Themes/game_theme.tres" type="Theme" id=3]
+[ext_resource path="res://Scenes/UI/Components/Input/UIInput.tscn" type="PackedScene" id=4]
+
+[node name="GenericInputDialogueMenu" type="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -96.0
+margin_top = -56.0
+margin_right = 96.0
+margin_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 192, 96 )
+theme = ExtResource( 3 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB" type="VBoxContainer" parent="Margin"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 188.0
+margin_bottom = 92.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DialogueTitle" type="Label" parent="Margin/VB"]
+margin_right = 184.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 1 )
+text = "Generic Title"
+align = 1
+
+[node name="VB_Body" type="VBoxContainer" parent="Margin/VB"]
+margin_top = 28.0
+margin_right = 184.0
+margin_bottom = 68.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DialogueText" type="Label" parent="Margin/VB/VB_Body"]
+margin_right = 184.0
+margin_bottom = 12.0
+text = "Generic Text"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CC" type="CenterContainer" parent="Margin/VB/VB_Body"]
+margin_top = 16.0
+margin_right = 184.0
+margin_bottom = 28.0
+
+[node name="InputText" type="LineEdit" parent="Margin/VB/VB_Body/CC"]
+margin_left = 32.0
+margin_right = 152.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 120, 0 )
+size_flags_horizontal = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB_ControlGroup" type="VBoxContainer" parent="Margin/VB"]
+margin_top = 72.0
+margin_right = 184.0
+margin_bottom = 88.0
+
+[node name="HB" type="HBoxContainer" parent="Margin/VB/VB_ControlGroup"]
+margin_right = 184.0
+margin_bottom = 16.0
+alignment = 2
+
+[node name="UIInput_OK" parent="Margin/VB/VB_ControlGroup/HB" instance=ExtResource( 4 )]
+margin_left = 119.0
+margin_right = 136.0
+InputButton = 15
+Text = "OK"
+
+[node name="UIInput_Cancel" parent="Margin/VB/VB_ControlGroup/HB" instance=ExtResource( 4 )]
+margin_left = 138.0
+margin_right = 155.0
+InputButton = 16
+Text = "Cancel"
+
+[node name="UIInput_Edit" parent="Margin/VB/VB_ControlGroup/HB" instance=ExtResource( 4 )]
+margin_left = 157.0
+margin_right = 174.0
+InputButton = 25
+Text = "Edit"
+
+[node name="Padding" type="Control" parent="Margin/VB/VB_ControlGroup/HB"]
+margin_left = 176.0
+margin_right = 184.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 8, 0 )

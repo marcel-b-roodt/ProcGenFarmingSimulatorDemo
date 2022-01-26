@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/Entities/Props/Interactables/SignboardEntity.cs" type="Script" id=1]
+[ext_resource path="res://Resources/Icons/mc_signboard.png" type="Texture" id=2]
+[ext_resource path="res://Resources/Textures/Lights/texture_animated_light.tres" type="Texture" id=3]
+[ext_resource path="res://Scenes/Entities/Meta/NameTagHolder.tscn" type="PackedScene" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Signboard" type="StaticBody2D"]
+script = ExtResource( 1 )
+DialogueText = PoolStringArray(  )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -0.8, -5 )
+scale = Vector2( 0.175, 0.175 )
+texture = ExtResource( 2 )
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 3 )
+mode = 2
+
+[node name="NameTagHolder" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, -27.3827 )

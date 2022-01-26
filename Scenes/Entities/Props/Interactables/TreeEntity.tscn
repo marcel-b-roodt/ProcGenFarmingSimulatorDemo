@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Resources/Textures/Props/entity_tree_variant1.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Entities/Props/Interactables/TreeEntity.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/Entities/Meta/NameTagHolder.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 12.0
+
+[node name="Tree" type="StaticBody2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -46.4144 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="TransparencyArea" type="Area2D" parent="."]
+monitorable = false
+collision_layer = 524288
+collision_mask = 524288
+
+[node name="TransparencyShape" type="CollisionPolygon2D" parent="TransparencyArea"]
+polygon = PoolVector2Array( -6.16728, 0.229752, -5.57268, -31.2842, -24.0054, -25.0409, -35.0055, -43.1762, -34.1136, -74.3929, -14.789, -107.691, 0.373352, -113.934, 18.2114, -107.393, 37.536, -73.501, 36.3468, -41.3924, 21.1844, -24.149, 9.58969, -30.3923, 8.69778, 0.527054 )
+
+[node name="NameTagHolder" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, -125.164 )
+
+[connection signal="body_entered" from="TransparencyArea" to="." method="_on_TransparencyArea_body_entered"]
+[connection signal="body_exited" from="TransparencyArea" to="." method="_on_TransparencyArea_body_exited"]

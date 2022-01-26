@@ -1,0 +1,158 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/UI/GameMenus/QuickSlotMenu.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/InventoryTab/InventoryRow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Themes/game_theme.tres" type="Theme" id=3]
+[ext_resource path="res://Resources/Icons/empty_cell.png" type="Texture" id=4]
+
+[node name="QuickSlotMenu" type="Panel"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+theme = ExtResource( 3 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB" type="VBoxContainer" parent="."]
+grow_horizontal = 2
+grow_vertical = 0
+custom_constants/separation = -2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemRowHeaders" type="HBoxContainer" parent="VB"]
+margin_right = 100.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+size_flags_horizontal = 0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Padding" type="Control" parent="VB/ItemRowHeaders"]
+margin_right = 4.0
+rect_min_size = Vector2( 4, 0 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Row1" type="TextureButton" parent="VB/ItemRowHeaders"]
+margin_left = 4.0
+margin_right = 28.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 24, 16 )
+texture_normal = ExtResource( 4 )
+expand = true
+
+[node name="1" type="Label" parent="VB/ItemRowHeaders/Row1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Row2" type="TextureButton" parent="VB/ItemRowHeaders"]
+margin_left = 28.0
+margin_right = 52.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 24, 16 )
+texture_normal = ExtResource( 4 )
+expand = true
+
+[node name="2" type="Label" parent="VB/ItemRowHeaders/Row2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Row3" type="TextureButton" parent="VB/ItemRowHeaders"]
+margin_left = 52.0
+margin_right = 76.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 24, 16 )
+texture_normal = ExtResource( 4 )
+expand = true
+
+[node name="3" type="Label" parent="VB/ItemRowHeaders/Row3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "3"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Row4" type="TextureButton" parent="VB/ItemRowHeaders"]
+margin_left = 76.0
+margin_right = 100.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 24, 16 )
+texture_normal = ExtResource( 4 )
+expand = true
+
+[node name="4" type="Label" parent="VB/ItemRowHeaders/Row4"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "4"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PC" type="PanelContainer" parent="VB"]
+margin_top = 14.0
+margin_right = 206.0
+margin_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 12
+size_flags_vertical = 12
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="VBoxContainer" parent="VB/PC"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 202.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventoryRow1" parent="VB/PC/ItemList" instance=ExtResource( 2 )]
+margin_right = 198.0
+
+[node name="InventoryRow2" parent="VB/PC/ItemList" instance=ExtResource( 2 )]
+visible = false
+margin_top = 40.0
+margin_bottom = 76.0
+
+[node name="InventoryRow3" parent="VB/PC/ItemList" instance=ExtResource( 2 )]
+visible = false
+anchor_bottom = 1.0
+margin_top = 90.0
+margin_bottom = 154.0
+
+[node name="InventoryRow4" parent="VB/PC/ItemList" instance=ExtResource( 2 )]
+visible = false
+anchor_bottom = 1.0
+margin_top = 136.0
+margin_bottom = 200.0

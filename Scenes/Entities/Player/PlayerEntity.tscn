@@ -1,0 +1,649 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://red.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/UI/GameMenus/PlayerUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Entities/Player/PlayerCameraPivot.cs" type="Script" id=3]
+[ext_resource path="res://Resources/Icons/icon_place_preview.png" type="Texture" id=4]
+[ext_resource path="res://Resources/Textures/Lights/AnimatedTexture_Light.tres" type="Texture" id=5]
+
+[sub_resource type="CSharpScript" id=1]
+script/source = "using Godot;
+using System.Collections.Generic;
+using static Helpers;
+
+public class PlayerEntity : KinematicEntityNode<PlayerData>
+{
+	public int Speed { get; private set; } = 200;
+	public Vector2 LookDirection { get { return lookDirection; } }
+	public Vector2 MoveDirection { get { return moveDirection; } }
+
+	public Camera2D PlayerCamera;
+
+	public static float ItemCollectionRange;
+
+	private Vector2 lookDirection = new Vector2(1, 0);
+	private Vector2 moveDirection = new Vector2();
+
+	private AnimationPlayer playerSpriteAnimator;
+	private Area2D interactArea;
+	private Sprite activeItemSprite;
+	private Area2D entityRangeArea;
+	private PlayerUI playerUI;
+
+	private QuickSlot activeQuickSlot = QuickSlot.Empty;
+
+	//TODO: Store all the InGameMenus in a list and then cycle through them if they are open and you press R1 or L1
+	//Would only be necessary if we need to cycle through multiple menus
+
+	#region GodotEvents
+	//public Player()
+	//{
+
+	//}
+
+	public override void _Ready()
+	{
+		PlayerCamera = GetNode<Camera2D>(\"LookDirectionPivot/CameraOffset/PlayerCamera\");
+		PlayerCamera.MakeCurrent();
+
+		playerSpriteAnimator = GetNode<AnimationPlayer>(\"PlayerSpriteAnimator\");
+		interactArea = GetNode<Area2D>(\"LookDirectionPivot/InteractionRangeArea\");
+		activeItemSprite = GetNode<Sprite>(\"LookDirectionPivot/ActiveItemSprite\");
+		entityRangeArea = GetNode<Area2D>(\"EntityRangeArea\");
+		playerUI = GetNode<PlayerUI>(\"PlayerUI\");
+
+		Data = Global.Instance.PlayerData;
+		Global.Instance.Player = this;
+		ItemCollectionRange = ((CircleShape2D)(GetNode<CollisionShape2D>($\"ItemCollectionRange/ItemCollectionRangeShape\").Shape)).Radius;
+	}
+
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		base._UnhandledInput(@event);
+
+		if (!Global.Instance.GamePaused)
+		{
+			if (@event.IsActionPressed(PlayerInputCodes.X))
+			{
+				InteractWithObject();
+			}
+
+			else if (@event.IsActionPressed(PlayerInputCodes.DPad_Up))
+			{
+				UpdateQuickSlotSelection(QuickSlot.Up);
+			}
+
+			else if (@event.IsActionPressed(PlayerInputCodes.DPad_Down))
+			{
+				UpdateQuickSlotSelection(QuickSlot.Down);
+			}
+
+			else if (@event.IsActionPressed(PlayerInputCodes.DPad_Left))
+			{
+				UpdateQuickSlotSelection(QuickSlot.Left);
+			}
+
+			else if (@event.IsActionPressed(PlayerInputCodes.DPad_Right))
+			{
+				UpdateQuickSlotSelection(QuickSlot.Right);
+			}
+		}
+	}
+
+	public override void _PhysicsProcess(float delta)
+	{
+		UpdateMovementInput();
+		UpdateLookDirection();
+		UpdatePlayerSpriteAnimation();
+
+		var velocity = moveDirection.Normalized() * Speed;
+		MoveAndSlide(velocity);
+		Data.Position = GlobalPosition;
+
+		base._PhysicsProcess(delta);
+	}
+	#endregion
+
+	#region Movement
+	private void UpdateMovementInput()
+	{
+		moveDirection.x = 0;
+		moveDirection.y = 0;
+
+		if (Global.Instance.MenusOpen == 0)
+		{
+			if (Input.IsActionPressed(PlayerInputCodes.Right))
+				moveDirection.x += 1;
+			if (Input.IsActionPressed(PlayerInputCodes.Left))
+				moveDirection.x -= 1;
+			if (Input.IsActionPressed(PlayerInputCodes.Down))
+				moveDirection.y += 1;
+			if (Input.IsActionPressed(PlayerInputCodes.Up))
+				moveDirection.y += -1;
+		}
+	}
+
+	private void UpdateLookDirection()
+	{
+		if (moveDirection.Length() > 0)
+		{
+			lookDirection = moveDirection.Normalized();
+		}
+	}
+
+	private void UpdatePlayerSpriteAnimation()
+	{
+		if (moveDirection.Length() > 0)
+		{
+			if (moveDirection.x > 0)
+				playerSpriteAnimator.Play(\"walk_right\");
+			else if (moveDirection.x < 0)
+				playerSpriteAnimator.Play(\"walk_left\");
+			else if (moveDirection.y > 0)
+				playerSpriteAnimator.Play(\"walk_down\");
+			else if (moveDirection.y < 0)
+				playerSpriteAnimator.Play(\"walk_up\");
+		}
+		else
+		{
+			if (lookDirection.x > 0)
+				playerSpriteAnimator.Play(\"idle_right\");
+			else if (lookDirection.x < 0)
+				playerSpriteAnimator.Play(\"idle_left\");
+			else if (lookDirection.y > 0)
+				playerSpriteAnimator.Play(\"idle_down\");
+			else if (lookDirection.y < 0)
+				playerSpriteAnimator.Play(\"idle_up\");
+		}
+	}
+	#endregion
+
+	#region Actions
+	private void InteractWithObject()
+	{
+		var bodies = interactArea.GetOverlappingAreas();
+		foreach (Node body in bodies)
+		{
+			if (!(body is IInteractable))
+				continue;
+
+			if (body is IDialogueInteractable)
+			{
+				var dialogue = (IDialogueInteractable)body;
+				playerUI.StartDialogue(dialogue.DialogueText);
+				return;
+			}
+			else
+			{
+				throw new System.InvalidCastException($\"A case was not available for the interactable with name {body.Name} and type {body.GetType()}\");
+			}
+		}
+	}
+
+	private void UseActiveItem()
+	{
+		var activeItem = Global.Instance.PlayerData.Inventory.QuickSlotItems[activeQuickSlot];
+		if (activeItem.Metadata is ToolItemMetadata)
+		{
+			var toolMetadata = (ToolItemMetadata)activeItem.Metadata;
+			var bodies = interactArea.GetOverlappingAreas();
+
+			switch (toolMetadata.ToolType)
+			{
+				case InventoryToolType.Axe:
+					return;
+				case InventoryToolType.Hoe:
+					return;
+				case InventoryToolType.Melee:
+					return;
+				case InventoryToolType.Pickaxe:
+					return;
+				case InventoryToolType.Spade:
+					//var targetItem = bodies.FirstOrDefault();
+					//TODO: Get the cell that we are targeting. We need to make sure we can create soil there
+					//Then we create a soil patch and save that in the game world.
+					return;
+			}
+		}
+	}
+	#endregion
+
+	#region Helpers
+	public List<IEntity<EntityData>> GetAllEntityNodesInRange()
+	{
+		var areas = entityRangeArea.GetOverlappingBodies();
+		var results = new List<IEntity<EntityData>>();
+		for (int i = 0; i < areas.Count; i++)
+		{
+			var area = areas[i];
+
+			if (area is IEntity<EntityData>)
+				results.Add(area as IEntity<EntityData>);
+		}
+
+		return results;
+	}
+
+	private void UpdateQuickSlotSelection(QuickSlot quickSlot)
+	{
+		if (Global.Instance.PlayerData.Inventory.QuickSlotItems[quickSlot].IsEmpty)
+			activeQuickSlot = QuickSlot.Empty;
+		else
+		{
+			activeQuickSlot = activeQuickSlot != quickSlot ? quickSlot : QuickSlot.Empty;
+		}
+
+		UpdateActiveItemSprite();
+	}
+
+	private void UpdateActiveItemSprite()
+	{
+		if (activeQuickSlot == QuickSlot.Empty)
+		{
+			activeItemSprite.Texture = null;
+		}
+		else
+		{
+			var itemSpriteIconPath = Global.Instance.PlayerData.Inventory.QuickSlotItems[activeQuickSlot].Metadata.IconPath;
+			var itemSprite = ResourceLoader.Load<Texture>(itemSpriteIconPath);
+			SetSpriteImage(itemSprite);
+		}
+	}
+
+	private void SetSpriteImage(Texture texture)
+	{
+		var imageSize = texture.GetSize();
+
+		var targetSpriteSquareSize = 48;
+		var xScale = targetSpriteSquareSize / imageSize.x / 2;
+		var yScale = targetSpriteSquareSize / imageSize.y / 2;
+		var targetScale = Mathf.Min(xScale, yScale);
+
+		var scale = new Vector2(targetScale, targetScale);
+
+		activeItemSprite.Texture = texture;
+		activeItemSprite.Scale = scale;
+	}
+	#endregion
+
+	#region Signals
+	private void _on_EntityRangeArea_body_entered(object body)
+	{
+		var bodyNode = body as Node;
+		//var bodyOwner = bodyNode.Owner;
+		var targetObject = bodyNode.Owner ?? bodyNode;
+
+		if (TypeUtils.IsEntity(targetObject))
+		{
+			Global.Instance.GameWorld.ActivateEntityNode(targetObject as Node2D);
+		}
+		else
+		{
+			Debug.Print($\"Player Area Entered: Found an area that is not an IEntity<EntityData> type\");
+		}
+	}
+
+
+	private void _on_EntityRangeArea_body_exited(object body)
+	{
+		var bodyNode = body as Node;
+		//var bodyOwner = bodyNode.Owner;
+		var targetObject = bodyNode.Owner ?? bodyNode;
+
+		if (TypeUtils.IsEntity(targetObject))
+		{
+			Global.Instance.GameWorld.DeactivateEntityNode(targetObject as Node2D);
+		}
+		else
+		{
+			Debug.Print($\"Player Area Exited: Found an area that is not an IEntity<EntityData> type\");
+		}
+	}
+
+	private void _on_ItemCollectionRange_area_entered(object area)
+	{
+		if (area is ItemPickup)
+		{
+			var item = (ItemPickup)area;
+			item.PickUp();
+		}
+	}
+
+
+	private void _on_ItemCollectionRange_area_exited(object area)
+	{
+		if (area is ItemPickup)
+		{
+			var item = (ItemPickup)area;
+			item.PickedUp = false;
+		}
+	}
+	#endregion
+}
+
+
+
+
+private void _on_EntityRangeArea_area_entered(object area)
+{
+	// Replace with function body.
+}
+
+
+private void _on_EntityRangeArea_area_exited(object area)
+{
+	// Replace with function body.
+}
+"
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 4 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 4 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 4 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 4 )
+region = Rect2( 160, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 4 )
+region = Rect2( 192, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 4 )
+region = Rect2( 224, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 4 )
+region = Rect2( 256, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 4 )
+region = Rect2( 288, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 4 )
+region = Rect2( 320, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 4 )
+region = Rect2( 352, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=15]
+animations = [ {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
+"loop": true,
+"name": "default",
+"speed": 16.0
+} ]
+
+[sub_resource type="Animation" id=16]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+
+[sub_resource type="Animation" id=17]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=18]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 9 ]
+}
+
+[sub_resource type="Animation" id=19]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=20]
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 7, 8 ]
+}
+
+[sub_resource type="Animation" id=21]
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 4, 5 ]
+}
+
+[sub_resource type="Animation" id=22]
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 10, 9 ]
+}
+
+[sub_resource type="Animation" id=23]
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 2 ]
+}
+
+[sub_resource type="RectangleShape2D" id=24]
+extents = Vector2( 14.4488, 10 )
+
+[sub_resource type="CircleShape2D" id=25]
+radius = 800.0
+
+[sub_resource type="CircleShape2D" id=26]
+radius = 30.0
+
+[node name="Player" type="KinematicBody2D"]
+collision_layer = 5
+collision_mask = 5
+script = SubResource( 1 )
+
+[node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 2 )
+shape = SubResource( 2 )
+
+[node name="PlayerLight" type="Light2D" parent="."]
+texture = ExtResource( 5 )
+texture_scale = 2.0
+mode = 2
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="PlayerSprite" type="Sprite" parent="YSort"]
+position = Vector2( 0, -18 )
+scale = Vector2( 1.39705, 1.39705 )
+texture = ExtResource( 1 )
+hframes = 3
+vframes = 4
+frame = 6
+
+[node name="PlaceItemPreviewSprite" type="AnimatedSprite" parent="YSort"]
+visible = false
+frames = SubResource( 15 )
+playing = true
+
+[node name="PlayerSpriteAnimator" type="AnimationPlayer" parent="YSort"]
+root_node = NodePath("../PlayerSprite")
+anims/idle_down = SubResource( 16 )
+anims/idle_left = SubResource( 17 )
+anims/idle_right = SubResource( 18 )
+anims/idle_up = SubResource( 19 )
+anims/walk_down = SubResource( 20 )
+anims/walk_left = SubResource( 21 )
+anims/walk_right = SubResource( 22 )
+anims/walk_up = SubResource( 23 )
+
+[node name="LookDirectionPivot" type="Position2D" parent="YSort"]
+visible = false
+position = Vector2( 0, -8 )
+script = ExtResource( 3 )
+
+[node name="InteractionRangeArea" type="Area2D" parent="YSort/LookDirectionPivot"]
+visible = false
+position = Vector2( 24, 0 )
+gravity_vec = Vector2( 0, 0 )
+
+[node name="InteractionRangeShape" type="CollisionShape2D" parent="YSort/LookDirectionPivot/InteractionRangeArea"]
+scale = Vector2( 1.75, 1.75 )
+shape = SubResource( 24 )
+
+[node name="CameraOffset" type="Position2D" parent="YSort/LookDirectionPivot"]
+position = Vector2( 48.2847, 0 )
+
+[node name="PlayerCamera" type="Camera2D" parent="YSort/LookDirectionPivot/CameraOffset"]
+current = true
+zoom = Vector2( 1.33, 1.33 )
+smoothing_enabled = true
+smoothing_speed = 3.0
+drag_margin_left = 0.1
+drag_margin_top = 0.1
+drag_margin_right = 0.1
+drag_margin_bottom = 0.1
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="ActiveItemSprite" type="Sprite" parent="YSort/LookDirectionPivot"]
+position = Vector2( 0, 8 )
+
+[node name="EntityRangeArea" type="Area2D" parent="."]
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="EntityRangeShape" type="CollisionShape2D" parent="EntityRangeArea"]
+shape = SubResource( 25 )
+
+[node name="TileRangeArea" type="Area2D" parent="."]
+visible = false
+monitoring = false
+monitorable = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TileRangeShape" type="CollisionShape2D" parent="TileRangeArea"]
+shape = SubResource( 25 )
+
+[node name="ItemCollectionRange" type="Area2D" parent="."]
+visible = false
+monitorable = false
+collision_layer = 2
+collision_mask = 2
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ItemCollectionRangeShape" type="CollisionShape2D" parent="ItemCollectionRange"]
+shape = SubResource( 26 )
+
+[node name="PlayerUI" parent="." instance=ExtResource( 2 )]
+
+[connection signal="area_entered" from="EntityRangeArea" to="." method="_on_EntityRangeArea_area_entered"]
+[connection signal="area_exited" from="EntityRangeArea" to="." method="_on_EntityRangeArea_area_exited"]
+[connection signal="body_entered" from="EntityRangeArea" to="." method="_on_EntityRangeArea_body_entered"]
+[connection signal="body_exited" from="EntityRangeArea" to="." method="_on_EntityRangeArea_body_exited"]
+[connection signal="area_entered" from="ItemCollectionRange" to="." method="_on_ItemCollectionRange_area_entered"]
+[connection signal="area_exited" from="ItemCollectionRange" to="." method="_on_ItemCollectionRange_area_exited"]

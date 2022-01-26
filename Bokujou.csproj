@@ -1,0 +1,175 @@
+﻿<Project Sdk="Godot.NET.Sdk/3.3.0">
+  <PropertyGroup>
+    <ProjectGuid>{7807631F-3DD9-43CC-96E1-9FFC9DE6C520}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Bokujou</RootNamespace>
+    <AssemblyName>Bokujou</AssemblyName>
+    <GodotProjectGeneratorVersion>1.0.0.0</GodotProjectGeneratorVersion>
+    <TargetFramework>net472</TargetFramework>
+    <!--The following properties were overriden during migration to prevent errors.
+    Enabling them may require other manual changes to the project and its files.-->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>false</Deterministic>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Code\Models\Entities\Base\IEntityData.cs" />
+    <Compile Include="Code\Models\Entities\Items\InventoryItem.cs" />
+    <Compile Include="Code\Models\Entities\Items\Metadata\BuildingKitMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\Metadata\Consumables\PotionConsumableMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\Metadata\Consumables\FoodConsumableMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\Metadata\Consumables\NameTagConsumableMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Props\Crops\ArtichokeCropData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Crops\CarrotCropData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Crops\PotatoCropData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Crops\GourdCropData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Crops\TomatoCropData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Crops\CornCropData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Crops\Base\CropData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Interactables\Base\BuildingData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Interactables\Buildings\TentData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Misc\Base\MiscData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Misc\RockData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Crops\TallGrassData.cs" />
+    <Compile Include="Code\Models\Entities\Skills\SkillLookup.cs" />
+    <Compile Include="Code\Models\Entities\Skills\Metadata\SkillMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Crafting\Metadata\CraftingMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Crafting\CraftingLookup.cs" />
+    <Compile Include="Code\Models\Entities\Crafting\Requirements\ResourceCraftingRequirement.cs" />
+    <Compile Include="Code\Models\Entities\Crafting\Requirements\SkillCraftingRequirement.cs" />
+    <Compile Include="Code\Models\Entities\Crafting\Requirements\BaseCraftingRequirement.cs" />
+    <Compile Include="Code\Models\Entities\Items\Data\ItemPickupData.cs" />
+    <Compile Include="Code\Models\Entities\Items\PickupManager.cs" />
+    <Compile Include="Code\Models\Entities\Player\ActorData.cs" />
+    <Compile Include="Code\Models\Entities\Player\PlayerStats.cs" />
+    <Compile Include="Code\Models\Entities\Props\Interactables\SignboardData.cs" />
+    <Compile Include="Code\Models\Entities\Base\TileEntityData.cs" />
+    <Compile Include="Code\Models\Entities\Base\EntityData.cs" />
+    <Compile Include="Code\Models\Entities\Items\ItemLookup.cs" />
+    <Compile Include="Code\Models\Entities\Items\Metadata\MiscItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\Metadata\ConsumableItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\Metadata\EmptyItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\Metadata\CropSeedItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\Metadata\ToolItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\Metadata\BaseItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Player\PlayerInventory.cs" />
+    <Compile Include="Code\Models\Entities\Player\PlayerInventorySlot.cs" />
+    <Compile Include="Code\Models\Entities\Player\PlayerData.cs" />
+    <Compile Include="Code\Models\Entities\Props\Interactables\TreeData.cs" />
+    <Compile Include="Code\Utils\Constants\Themes.cs" />
+    <Compile Include="Code\Utils\Maths\GameDateTime.cs" />
+    <Compile Include="Code\Models\GameData.cs" />
+    <Compile Include="Code\Models\World\Biomes\TemperateBiome.cs" />
+    <Compile Include="Code\Models\World\CellLakeData.cs" />
+    <Compile Include="Code\Models\World\CellRiverData.cs" />
+    <Compile Include="Code\Models\World\Enums\BiomeType.cs" />
+    <Compile Include="Code\Models\World\Enums\FeatureTile.cs" />
+    <Compile Include="Code\Models\World\Enums\EntityTile.cs" />
+    <Compile Include="Code\Models\World\Enums\WorldTile.cs" />
+    <Compile Include="Code\Models\World\WorldCellTileData.cs" />
+    <Compile Include="Code\Models\World\WorldCellData.cs" />
+    <Compile Include="Code\Models\World\WorldCellRegion.cs" />
+    <Compile Include="Code\Models\World\Helpers\WorldTileExtensions.cs" />
+    <Compile Include="Code\Utils\Debug\Debug.cs" />
+    <Compile Include="Code\Utils\Exceptions.cs" />
+    <Compile Include="Code\Utils\Extensions\SpriteExtensions.cs" />
+    <Compile Include="Code\Utils\Extensions\ObjectExtensions.cs" />
+    <Compile Include="Code\Utils\Node\NodeUtils.cs" />
+    <Compile Include="Code\Utils\ProcGen\PoissonDiscNoise.cs" />
+    <Compile Include="Code\Utils\Constants\Colours.cs" />
+    <Compile Include="Code\Utils\Constants\Strings.cs" />
+    <Compile Include="Code\Utils\Constants\Helpers.cs" />
+    <Compile Include="Code\EventManager\EventManager.cs" />
+    <Compile Include="Code\Utils\Maths\TileCoordinates.cs" />
+    <Compile Include="Code\Utils\Maths\Mathf.cs" />
+    <Compile Include="Code\Models\World\CellCoordinates.cs" />
+    <Compile Include="Code\Utils\PlayerUtils.cs" />
+    <Compile Include="Code\Utils\ProcGen\Noise.cs" />
+    <Compile Include="Code\Utils\StringUtils.cs" />
+    <Compile Include="Scenes\Entities\Interfaces\IEntityExtensions.cs" />
+    <Compile Include="Scenes\Entities\Interfaces\IPickable.cs" />
+    <Compile Include="Scenes\Entities\Interfaces\IChoppable.cs" />
+    <Compile Include="Scenes\Entities\Interfaces\IThreshable.cs" />
+    <Compile Include="Scenes\Entities\Interfaces\IAttackable.cs" />
+    <Compile Include="Scenes\Entities\Interfaces\IDropsResource.cs" />
+    <Compile Include="Scenes\Entities\Interfaces\ICrop.cs" />
+    <Compile Include="Scenes\Entities\Interfaces\ITileEntity.cs" />
+    <Compile Include="Scenes\Entities\Interfaces\IEntity.cs" />
+    <Compile Include="Scenes\Entities\Items\Interfaces\IPickup.cs" />
+    <Compile Include="Scenes\Entities\Meta\NameTag.cs" />
+    <Compile Include="Scenes\Entities\Meta\NameTagHolder.cs" />
+    <Compile Include="Scenes\Entities\Meta\SoundPlayer.cs" />
+    <Compile Include="Scenes\Entities\Player\Interfaces\IActor.cs" />
+    <Compile Include="Scenes\Entities\Player\Interfaces\IPlayerActor.cs" />
+    <Compile Include="Scenes\Entities\Props\Crops\ArtichokeCropEntity.cs" />
+    <Compile Include="Scenes\Entities\Props\Crops\CarrotCropEntity.cs" />
+    <Compile Include="Scenes\Entities\Props\Crops\GourdCropEntity.cs" />
+    <Compile Include="Scenes\Entities\Props\Crops\PotatoCropEntity.cs" />
+    <Compile Include="Scenes\Entities\Props\Crops\TomatoCropEntity.cs" />
+    <Compile Include="Scenes\Entities\Props\Crops\CornCropEntity.cs" />
+    <Compile Include="Scenes\Entities\Props\TreeSaplingEntity.cs" />
+    <Compile Include="Scenes\Entities\Props\Interactables\Buildings\TentEntity.cs" />
+    <Compile Include="Scenes\Entities\Props\Interactables\Interfaces\IHarvestInteractable.cs" />
+    <Compile Include="Scenes\Entities\Props\Interactables\Interfaces\IDialogueInteractable.cs" />
+    <Compile Include="Scenes\Entities\Props\Interactables\Interfaces\IBuildingInteractable.cs" />
+    <Compile Include="Scenes\Entities\Props\Interactables\SignboardEntity.cs" />
+    <Compile Include="Scenes\Entities\Props\Interactables\Interfaces\IInteractable.cs" />
+    <Compile Include="Scenes\Entities\Props\Interactables\TreeEntity.cs" />
+    <Compile Include="Scenes\Entities\Props\RockEntity.cs" />
+    <Compile Include="Scenes\Entities\Props\TallGrassEntity.cs" />
+    <Compile Include="Scenes\UI\Components\Input\UIInput.cs" />
+    <Compile Include="Scenes\UI\GameMenus\GenericInputDialogueMenu.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\CraftingTab\CraftingTreeCategoryNode.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\CraftingTab\CraftingTreeNode.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\CraftingTab\CraftingTreeRecipeNode.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\DebugMenu\DebugOutputMenu.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\MapTab\MapView.cs" />
+    <Compile Include="Scenes\AutoLoads\Global.cs" />
+    <Compile Include="Scenes\Entities\Player\PlayerCameraPivot.cs" />
+    <Compile Include="Scenes\Entities\Player\PlayerEntity.cs" />
+    <Compile Include="Scenes\Entities\Items\ItemPickupEntity.cs" />
+    <Compile Include="Scenes\UI\Components\DropDownMenu.cs" />
+    <Compile Include="Scenes\UI\Components\InGameMenu.cs" />
+    <Compile Include="Scenes\UI\Components\MenuListContainer.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\DebugMenu\DebugMenu.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\CraftingTab\CraftingTab.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\CraftingTab\CraftingRequirementNode.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\InventoryTab\InventoryCell.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\InventoryTab\InventoryTab.cs" />
+    <Compile Include="Scenes\UI\GameMenus\DialogueMenu.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MainMenu.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\InventoryTab\ItemQuantityPopup.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\MapTab\MapTab.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MenuComponents\OptionsTab\OptionsTab.cs" />
+    <Compile Include="Scenes\UI\GameMenus\PlayerUI.cs" />
+    <Compile Include="Scenes\UI\GameMenus\QuickSlotMenu.cs" />
+    <Compile Include="Scenes\UI\Components\TitleMenu.cs" />
+    <Compile Include="Scenes\UI\TitleScreen\TitleScreenMenu.cs" />
+    <Compile Include="Scenes\UI\TransitionControl\TransitionControl.cs" />
+    <Compile Include="Scenes\Utils\NodeHelpers\NodeHelpers.cs" />
+    <Compile Include="Scenes\Utils\ResourceStores\ItemStore.cs" />
+    <Compile Include="Scenes\Utils\ResourceStores\ImageStore.cs" />
+    <Compile Include="Scenes\Utils\Managers\ConsumableManager.cs" />
+    <Compile Include="Scenes\Utils\Managers\MessageManager.cs" />
+    <Compile Include="Scenes\Utils\ResourceStores\SoundStore.cs" />
+    <Compile Include="Scenes\Utils\ResourceStores\SceneStore.cs" />
+    <Compile Include="Scenes\Utils\Managers\CropManager.cs" />
+    <Compile Include="Scenes\Utils\Managers\EntityManager.cs" />
+    <Compile Include="Scenes\Worlds\WorldCell.cs" />
+    <Compile Include="Scenes\Worlds\GameWorld.cs" />
+    <Compile Include="Scenes\Worlds\WorldGen.cs" />
+    <Compile Include="Scenes\Entities\Meta\ToastMessage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Code\Models\Database\database_items.json" />
+    <None Include="Scenes\UI\TransitionControl\TransitionControl.tscn" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scenes\Entities\Items\Base\" />
+  </ItemGroup>
+  <ItemGroup />
+</Project>

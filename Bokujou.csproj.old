@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7807631F-3DD9-43CC-96E1-9FFC9DE6C520}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <OutputPath>.mono\temp\bin\$(Configuration)</OutputPath>
+    <RootNamespace>Bokujou</RootNamespace>
+    <AssemblyName>Bokujou</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <BaseIntermediateOutputPath>.mono\temp\obj</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)</IntermediateOutputPath>
+    <ApiConfiguration Condition=" '$(Configuration)' != 'Release' ">Debug</ApiConfiguration>
+    <ApiConfiguration Condition=" '$(Configuration)' == 'Release' ">Release</ApiConfiguration>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Tools|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TOOLS;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GodotSharp">
+      <Private>False</Private>
+      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="GodotSharpEditor" Condition=" '$(Configuration)' == 'Tools' ">
+      <Private>False</Private>
+      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharpEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Code\Models\Entities\EntityData.cs" />
+    <Compile Include="Code\Models\Entities\Items\ItemDatabase.cs" />
+    <Compile Include="Code\Models\Entities\Items\MiscItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\ConsumableItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\MetaItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\CropSeedItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\ToolItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Items\BaseItemMetadata.cs" />
+    <Compile Include="Code\Models\Entities\Player\PlayerInventory.cs" />
+    <Compile Include="Code\Models\Entities\Player\PlayerInventorySlot.cs" />
+    <Compile Include="Code\Models\Entities\Player\PlayerVars.cs" />
+    <Compile Include="Code\Models\Entities\Props\TreeData.cs" />
+    <Compile Include="Code\Models\World\CellLakeData.cs" />
+    <Compile Include="Code\Models\World\CellRiverData.cs" />
+    <Compile Include="Code\Models\World\Enums\FeatureTile.cs" />
+    <Compile Include="Code\Models\World\Enums\WorldTile.cs" />
+    <Compile Include="Code\Models\World\WorldCellTileData.cs" />
+    <Compile Include="Code\Models\World\WorldCellData.cs" />
+    <Compile Include="Code\Models\World\WorldCellRegionCollection.cs" />
+    <Compile Include="Code\Models\World\Helpers\WorldTileExtensions.cs" />
+    <Compile Include="Code\Utils\Exceptions.cs" />
+    <Compile Include="Code\Utils\Extensions\SpriteExtensions.cs" />
+    <Compile Include="Code\Utils\Extensions\ObjectExtensions.cs" />
+    <Compile Include="Code\Utils\Helpers.cs" />
+    <Compile Include="Code\EventManager\EventManager.cs" />
+    <Compile Include="Code\Utils\Maths\TileCoordinates.cs" />
+    <Compile Include="Code\Utils\Maths\Mathf.cs" />
+    <Compile Include="Code\Models\World\CellCoordinates.cs" />
+    <Compile Include="Code\Utils\PlayerUtils.cs" />
+    <Compile Include="Code\Utils\ProcGen\Noise.cs" />
+    <Compile Include="Scenes\Entities\WorldObjects\Props\PropTree.cs" />
+    <Compile Include="Scenes\UI\GameMenus\DebugOutputMenu.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MapMenu\MapView.cs" />
+    <Compile Include="Scenes\Entities\AutoLoads\Global.cs" />
+    <Compile Include="Scenes\Entities\Player\Camera\CameraPivot.cs" />
+    <Compile Include="Scenes\Entities\Player\Player.cs" />
+    <Compile Include="Scenes\Entities\WorldObjects\Interactables\DialogueInteractable.cs" />
+    <Compile Include="Scenes\Entities\WorldObjects\Interactables\Interactable.cs" />
+    <Compile Include="Scenes\Entities\WorldObjects\Inventory\ItemPickup.cs" />
+    <Compile Include="Scenes\UI\Components\DropDownMenu.cs" />
+    <Compile Include="Scenes\UI\Components\InGameMenu.cs" />
+    <Compile Include="Scenes\UI\Components\MenuListContainer.cs" />
+    <Compile Include="Scenes\UI\GameMenus\DebugMenu.cs" />
+    <Compile Include="Scenes\UI\GameMenus\DialogueMenu.cs" />
+    <Compile Include="Scenes\UI\GameMenus\InventoryCell.cs" />
+    <Compile Include="Scenes\UI\GameMenus\InventoryMenu.cs" />
+    <Compile Include="Scenes\UI\GameMenus\MapMenu\MapMenu.cs" />
+    <Compile Include="Scenes\UI\GameMenus\PauseMenu.cs" />
+    <Compile Include="Scenes\UI\GameMenus\PlayerUI.cs" />
+    <Compile Include="Scenes\UI\GameMenus\QuickSlotCell.cs" />
+    <Compile Include="Scenes\UI\GameMenus\QuickSlotMenu.cs" />
+    <Compile Include="Scenes\UI\TitleScreen\Menus\ContinueMenu.cs" />
+    <Compile Include="Scenes\UI\TitleScreen\Menus\NewGameMenu.cs" />
+    <Compile Include="Scenes\UI\TitleScreen\Menus\OptionsMenu.cs" />
+    <Compile Include="Scenes\UI\Components\TitleMenu.cs" />
+    <Compile Include="Scenes\UI\TitleScreen\TitleScreenMenu.cs" />
+    <Compile Include="Scenes\UI\TransitionControl\TransitionControl.cs" />
+    <Compile Include="Scenes\Worlds\WorldCell.cs" />
+    <Compile Include="Scenes\Worlds\GameWorld.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Code\Models\Database\database_items.json" />
+    <None Include="Scenes\UI\TransitionControl\TransitionControl.tscn" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

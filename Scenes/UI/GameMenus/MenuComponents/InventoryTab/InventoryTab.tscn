@@ -1,0 +1,241 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/InventoryTab/InventoryCell.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/InventoryTab/InventoryRow.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/InventoryTab/InventoryTab.cs" type="Script" id=4]
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/InventoryTab/ItemQuantityPopup.cs" type="Script" id=6]
+[ext_resource path="res://Resources/Themes/game_theme.tres" type="Theme" id=7]
+[ext_resource path="res://Resources/Themes/Styles/panel_content_stylebox_flat.tres" type="StyleBox" id=9]
+[ext_resource path="res://Scenes/UI/Components/Input/UIInput.tscn" type="PackedScene" id=10]
+
+[node name="InventoryTab" type="Panel"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 302.0
+margin_bottom = 142.0
+theme = ExtResource( 7 )
+custom_styles/panel = ExtResource( 9 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB_Items" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleLabel" type="Label" parent="VB_Items"]
+margin_right = 292.0
+margin_bottom = 12.0
+size_flags_horizontal = 3
+text = "Inventory"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="VBoxContainer" parent="VB_Items"]
+margin_top = 16.0
+margin_right = 292.0
+margin_bottom = 112.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventoryRow1" parent="VB_Items/ItemList" instance=ExtResource( 3 )]
+margin_right = 292.0
+mouse_filter = 1
+
+[node name="InventoryRow2" parent="VB_Items/ItemList" instance=ExtResource( 3 )]
+margin_top = 22.0
+margin_right = 292.0
+margin_bottom = 40.0
+
+[node name="InventoryRow3" parent="VB_Items/ItemList" instance=ExtResource( 3 )]
+margin_top = 44.0
+margin_right = 292.0
+margin_bottom = 62.0
+
+[node name="InventoryRow4" parent="VB_Items/ItemList" instance=ExtResource( 3 )]
+margin_top = 66.0
+margin_right = 292.0
+margin_bottom = 84.0
+
+[node name="Controls" type="HBoxContainer" parent="VB_Items"]
+margin_top = 116.0
+margin_right = 292.0
+margin_bottom = 132.0
+rect_min_size = Vector2( 0, 16 )
+size_flags_horizontal = 3
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UIInput_MoveItem" parent="VB_Items/Controls" instance=ExtResource( 10 )]
+margin_left = 218.0
+margin_right = 235.0
+InputButton = 15
+Text = "Move"
+
+[node name="UIInput_DropItem" parent="VB_Items/Controls" instance=ExtResource( 10 )]
+margin_left = 237.0
+margin_right = 254.0
+InputButton = 16
+Text = "Drop"
+
+[node name="UIInput_UseItem" parent="VB_Items/Controls" instance=ExtResource( 10 )]
+margin_left = 256.0
+margin_right = 273.0
+InputButton = 17
+Text = "Use"
+
+[node name="UIInput_ItemInfo" parent="VB_Items/Controls" instance=ExtResource( 10 )]
+margin_left = 275.0
+margin_right = 292.0
+InputButton = 18
+Text = "Info"
+
+[node name="ItemDetailPopup" type="PopupPanel" parent="."]
+margin_left = 304.0
+margin_top = 138.0
+margin_right = 368.0
+margin_bottom = 202.0
+rect_min_size = Vector2( 80, 64 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="ItemDetailPopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB" type="VBoxContainer" parent="ItemDetailPopup/Margin"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 68.0
+margin_bottom = 52.0
+
+[node name="ItemDetailIcon" type="TextureRect" parent="ItemDetailPopup/Margin/VB"]
+margin_right = 16.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+
+[node name="ItemDetailInfoLabel" type="RichTextLabel" parent="ItemDetailPopup/Margin/VB"]
+margin_top = 20.0
+margin_right = 64.0
+margin_bottom = 48.0
+size_flags_vertical = 3
+bbcode_enabled = true
+
+[node name="ItemQuantityPopup" type="PopupPanel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_right = 128.0
+margin_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 128, 48 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="ItemQuantityPopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB" type="VBoxContainer" parent="ItemQuantityPopup/Margin"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 116.0
+margin_bottom = 52.0
+
+[node name="PopupTitleLabel" type="Label" parent="ItemQuantityPopup/Margin/VB"]
+margin_right = 112.0
+margin_bottom = 12.0
+text = "Item Quantity"
+align = 1
+
+[node name="HB_Slider" type="HBoxContainer" parent="ItemQuantityPopup/Margin/VB"]
+margin_top = 16.0
+margin_right = 112.0
+margin_bottom = 32.0
+alignment = 1
+
+[node name="ItemQuantityMin" type="Label" parent="ItemQuantityPopup/Margin/VB/HB_Slider"]
+margin_right = 24.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 24, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "1"
+align = 2
+valign = 1
+
+[node name="ItemQuantitySlider" type="HSlider" parent="ItemQuantityPopup/Margin/VB/HB_Slider"]
+margin_left = 26.0
+margin_right = 86.0
+margin_bottom = 16.0
+focus_neighbour_bottom = NodePath("../../HB_Buttons/OK_Button")
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 8.0
+ticks_on_borders = true
+
+[node name="ItemQuantityMax" type="Label" parent="ItemQuantityPopup/Margin/VB/HB_Slider"]
+margin_left = 88.0
+margin_right = 112.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 24, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "1"
+valign = 1
+
+[node name="SelectedItemQuantityLabel" type="Label" parent="ItemQuantityPopup/Margin/VB"]
+margin_top = 36.0
+margin_right = 112.0
+margin_bottom = 48.0
+text = "1"
+align = 1
+
+[node name="CursorItem_InventoryCell" parent="." instance=ExtResource( 2 )]
+visible = false
+margin_left = 4.0
+margin_top = 8.0
+margin_right = 22.0
+margin_bottom = 26.0
+focus_mode = 0
+shortcut_in_tooltip = false
+enabled_focus_mode = 0
+
+[connection signal="value_changed" from="ItemQuantityPopup/Margin/VB/HB_Slider/ItemQuantitySlider" to="ItemQuantityPopup" method="_on_ItemQuantitySlider_value_changed"]

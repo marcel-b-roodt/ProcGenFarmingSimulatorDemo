@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/CraftingTab/CraftingTreeRecipeNode.cs" type="Script" id=1]
+[ext_resource path="res://Resources/Fonts/disposable_droid_bb_10.tres" type="DynamicFont" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://Resources/Themes/Styles/panel_stylebox_flat_unhighlighted.tres" type="StyleBox" id=4]
+[ext_resource path="res://Resources/Themes/game_theme.tres" type="Theme" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[node name="CraftingTreeRecipeNode" type="PanelContainer"]
+margin_right = 14.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 0, 16 )
+focus_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource( 5 )
+custom_styles/panel = ExtResource( 4 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_right = 14.0
+margin_bottom = 16.0
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+
+[node name="HB" type="HBoxContainer" parent="Button"]
+margin_left = -2.0
+margin_right = 36.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Padding" type="Control" parent="Button/HB"]
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="TextureRect" parent="Button/HB"]
+margin_left = 2.0
+margin_right = 18.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 16 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+
+[node name="Name" type="Label" parent="Button/HB"]
+margin_left = 20.0
+margin_right = 38.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+custom_fonts/font = ExtResource( 2 )
+text = "test"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

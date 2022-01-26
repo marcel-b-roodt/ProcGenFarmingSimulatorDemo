@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Resources/Fonts/disposable_droid_bb_12.tres" type="DynamicFont" id=1]
+
+
+
+[node name="TownMarker" type="Node2D"]
+
+[node name="TownDot" type="ColorRect" parent="."]
+margin_left = -2.0
+margin_top = -2.0
+margin_right = 2.0
+margin_bottom = 2.0
+color = Color( 0.176471, 0.721569, 0.0627451, 1 )
+
+[node name="TownName" type="Label" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 6.0
+margin_top = -6.5
+margin_right = 42.0
+margin_bottom = 6.5
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_shadow = Color( 0.176471, 0.721569, 0.0627451, 1 )
+text = "Town"
+valign = 1
+uppercase = true
+

@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scenes/UI/GameMenus/GenericInputDialogueMenu.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/UI/GameMenus/PlayerUI.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/UI/GameMenus/DialogueMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/UI/GameMenus/MainMenu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/UI/GameMenus/QuickSlotMenu.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/DebugMenu/DebugMenu.tscn" type="PackedScene" id=6]
+
+[node name="NewPlayerUI" type="CanvasLayer"]
+pause_mode = 2
+layer = 128
+script = ExtResource( 2 )
+
+[node name="MainMenu" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[node name="DialogueMenu" parent="." instance=ExtResource( 3 )]
+visible = false
+
+[node name="QuickSlotMenu" parent="." instance=ExtResource( 5 )]
+
+[node name="GenericDialogueMenu" parent="." instance=ExtResource( 1 )]
+visible = false
+
+[node name="DebugMenu" parent="." instance=ExtResource( 6 )]
+visible = false
+
+[node name="MenuAnimator" type="AnimationPlayer" parent="."]

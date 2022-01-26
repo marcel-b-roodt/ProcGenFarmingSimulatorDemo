@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/MapTab/MapTab.cs" type="Script" id=1]
+[ext_resource path="res://Resources/Themes/Styles/panel_content_stylebox_flat.tres" type="StyleBox" id=3]
+[ext_resource path="res://Resources/Themes/game_theme.tres" type="Theme" id=4]
+[ext_resource path="res://Scenes/UI/Components/Input/UIInput.tscn" type="PackedScene" id=5]
+
+[node name="MapTab" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -348.0
+margin_bottom = -228.0
+rect_pivot_offset = Vector2( -300.1, 76.8863 )
+theme = ExtResource( 4 )
+custom_styles/panel = ExtResource( 3 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleLabel" type="Label" parent="VB"]
+margin_right = 292.0
+margin_bottom = 12.0
+size_flags_vertical = 1
+text = "Map"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundRect" type="ColorRect" parent="VB"]
+margin_top = 16.0
+margin_right = 292.0
+margin_bottom = 112.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MapRenderBox" type="TextureRect" parent="VB/BackgroundRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Controls" type="HBoxContainer" parent="VB"]
+margin_top = 116.0
+margin_right = 292.0
+margin_bottom = 132.0
+rect_min_size = Vector2( 0, 16 )
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="UIInput_Move" parent="VB/Controls" instance=ExtResource( 5 )]
+margin_left = 218.0
+margin_right = 235.0
+Text = "Move"
+
+[node name="UIInput_ZoomIn" parent="VB/Controls" instance=ExtResource( 5 )]
+margin_left = 237.0
+margin_right = 254.0
+InputButton = 15
+Text = "Zoom In"
+
+[node name="UIInput_ZoomOut" parent="VB/Controls" instance=ExtResource( 5 )]
+margin_left = 256.0
+margin_right = 273.0
+InputButton = 16
+Text = "Zoom Out"
+
+[node name="UIInput_Recentre" parent="VB/Controls" instance=ExtResource( 5 )]
+margin_left = 275.0
+margin_right = 292.0
+InputButton = 17
+Text = "Recentre"

@@ -1,0 +1,205 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/CraftingTab/CraftingTab.cs" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Resources/Themes/Styles/panel_content_stylebox_flat.tres" type="StyleBox" id=3]
+[ext_resource path="res://Resources/Themes/Styles/panel_content_stylebox_flat_invert.tres" type="StyleBox" id=4]
+[ext_resource path="res://Resources/Themes/game_theme.tres" type="Theme" id=5]
+[ext_resource path="res://Resources/Fonts/disposable_droid_bb_10.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Scenes/UI/Components/Input/UIInput.tscn" type="PackedScene" id=7]
+
+[node name="CraftingTab" type="Panel"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 302.0
+margin_bottom = 142.0
+theme = ExtResource( 5 )
+custom_styles/panel = ExtResource( 3 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleLabel" type="Label" parent="VB"]
+margin_right = 292.0
+margin_bottom = 12.0
+text = "Crafting"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HB" type="HBoxContainer" parent="VB"]
+margin_top = 16.0
+margin_right = 292.0
+margin_bottom = 112.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PC_CraftingRecipes" type="PanelContainer" parent="VB/HB"]
+margin_right = 145.0
+margin_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = ExtResource( 4 )
+
+[node name="SC" type="ScrollContainer" parent="VB/HB/PC_CraftingRecipes"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 141.0
+margin_bottom = 92.0
+follow_focus = true
+scroll_horizontal_enabled = false
+
+[node name="VB_Tree" type="VBoxContainer" parent="VB/HB/PC_CraftingRecipes/SC"]
+margin_right = 137.0
+margin_bottom = 88.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="PC_SelectedRecipeRequirements" type="PanelContainer" parent="VB/HB"]
+visible = false
+margin_left = 59.0
+margin_right = 232.0
+margin_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+custom_styles/panel = ExtResource( 4 )
+
+[node name="MC" type="MarginContainer" parent="VB/HB/PC_SelectedRecipeRequirements"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 169.0
+margin_bottom = 92.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="VB" type="VBoxContainer" parent="VB/HB/PC_SelectedRecipeRequirements/MC"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 161.0
+margin_bottom = 84.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RequirementsTitle" type="Label" parent="VB/HB/PC_SelectedRecipeRequirements/MC/VB"]
+margin_right = 157.0
+margin_bottom = 12.0
+text = "Requirements"
+valign = 1
+
+[node name="VB_SelectedRecipeContainer" type="VBoxContainer" parent="VB/HB"]
+margin_left = 147.0
+margin_right = 292.0
+margin_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MC" type="MarginContainer" parent="VB/HB/VB_SelectedRecipeContainer"]
+margin_right = 145.0
+margin_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VB_ItemDisplay" type="VBoxContainer" parent="VB/HB/VB_SelectedRecipeContainer/MC"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 141.0
+margin_bottom = 92.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="VB_ItemImage" type="VBoxContainer" parent="VB/HB/VB_SelectedRecipeContainer/MC/VB_ItemDisplay"]
+margin_right = 137.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
+
+[node name="ItemImage" type="TextureRect" parent="VB/HB/VB_SelectedRecipeContainer/MC/VB_ItemDisplay/VB_ItemImage"]
+margin_right = 137.0
+margin_bottom = 32.0
+grow_horizontal = 2
+rect_min_size = Vector2( 32, 32 )
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SC" type="ScrollContainer" parent="VB/HB/VB_SelectedRecipeContainer/MC/VB_ItemDisplay"]
+margin_top = 36.0
+margin_right = 137.0
+margin_bottom = 88.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="ItemDescription" type="Label" parent="VB/HB/VB_SelectedRecipeContainer/MC/VB_ItemDisplay/SC"]
+margin_right = 137.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = ExtResource( 6 )
+text = "This is a test description for the item. This is what you can do with the thing."
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HB_Controls" type="HBoxContainer" parent="VB"]
+margin_top = 116.0
+margin_right = 292.0
+margin_bottom = 132.0
+rect_min_size = Vector2( 0, 16 )
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="UIInput_Navigate" parent="VB/HB_Controls" instance=ExtResource( 7 )]
+margin_left = 256.0
+margin_right = 273.0
+Text = "Navigate"
+
+[node name="UIInput_Select" parent="VB/HB_Controls" instance=ExtResource( 7 )]
+margin_left = 275.0
+margin_right = 292.0
+InputButton = 15
+Text = "Select"
+
+[node name="UIInput_Craft" parent="VB/HB_Controls" instance=ExtResource( 7 )]
+visible = false
+margin_left = 225.0
+margin_right = 293.0
+InputButton = 15
+Text = "Craft"
+
+[node name="UIInput_Back" parent="VB/HB_Controls" instance=ExtResource( 7 )]
+visible = false
+margin_left = 450.0
+margin_right = 518.0
+InputButton = 16
+Text = "Back"

@@ -1,0 +1,270 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Resources/Themes/game_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Scenes/UI/GameMenus/MainMenu.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/InventoryTab/InventoryTab.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/CraftingTab/CraftingTab.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/OptionsTab/OptionsTab.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/StatsTab/StatsTab.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/UI/GameMenus/MenuComponents/MapTab/MapTab.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Resources/Icons/mc_stone_axe.png" type="Texture" id=8]
+[ext_resource path="res://Resources/Icons/mc_map.png" type="Texture" id=9]
+[ext_resource path="res://Resources/Icons/mc_signboard.png" type="Texture" id=10]
+[ext_resource path="res://Resources/Icons/empty_cell.png" type="Texture" id=11]
+[ext_resource path="res://Resources/Icons/icon_tomato.png" type="Texture" id=12]
+[ext_resource path="res://Resources/Icons/mc_book_and_quill.png" type="Texture" id=13]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color( 0.85098, 0.65098, 0.309804, 1 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0.713726, 0.498039, 0.105882, 1 )
+shadow_color = Color( 0.046875, 0.0296645, 0.00531006, 1 )
+shadow_size = 4
+shadow_offset = Vector2( 0, -2 )
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[node name="MainMenu" type="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 320, 200 )
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VB" type="VBoxContainer" parent="Margin"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 316.0
+margin_bottom = 196.0
+
+[node name="Headers" type="HBoxContainer" parent="Margin/VB"]
+margin_right = 188.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 0, 36 )
+focus_neighbour_right = NodePath("CraftingIcon")
+size_flags_horizontal = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventoryButton" type="TextureButton" parent="Margin/VB/Headers"]
+margin_right = 36.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 36, 36 )
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 11 )
+expand = true
+
+[node name="InventoryIcon" type="TextureRect" parent="Margin/VB/Headers/InventoryButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -15.0
+rect_min_size = Vector2( 34, 34 )
+texture = ExtResource( 12 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CraftingButton" type="TextureButton" parent="Margin/VB/Headers"]
+margin_left = 38.0
+margin_right = 74.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 36, 36 )
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 11 )
+expand = true
+
+[node name="CraftingIcon" type="TextureRect" parent="Margin/VB/Headers/CraftingButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
+rect_min_size = Vector2( 34, 34 )
+texture = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MapButton" type="TextureButton" parent="Margin/VB/Headers"]
+margin_left = 76.0
+margin_right = 112.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 36, 36 )
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 11 )
+expand = true
+
+[node name="MapIcon" type="TextureRect" parent="Margin/VB/Headers/MapButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
+rect_min_size = Vector2( 34, 34 )
+texture = ExtResource( 9 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatsButton" type="TextureButton" parent="Margin/VB/Headers"]
+margin_left = 114.0
+margin_right = 150.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 36, 36 )
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 11 )
+expand = true
+
+[node name="StatsIcon" type="TextureRect" parent="Margin/VB/Headers/StatsButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
+rect_min_size = Vector2( 34, 34 )
+texture = ExtResource( 13 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionsButton" type="TextureButton" parent="Margin/VB/Headers"]
+margin_left = 152.0
+margin_right = 188.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 36, 36 )
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 11 )
+expand = true
+
+[node name="OptionsIcon" type="TextureRect" parent="Margin/VB/Headers/OptionsButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
+rect_min_size = Vector2( 34, 34 )
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Body" type="TabContainer" parent="Margin/VB"]
+margin_top = 40.0
+margin_right = 312.0
+margin_bottom = 192.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_styles/panel = SubResource( 1 )
+tabs_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventoryTab" parent="Margin/VB/Body" instance=ExtResource( 3 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_styles/panel = SubResource( 2 )
+
+[node name="CraftingTab" parent="Margin/VB/Body" instance=ExtResource( 4 )]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_styles/panel = SubResource( 3 )
+
+[node name="MapTab" parent="Margin/VB/Body" instance=ExtResource( 7 )]
+visible = false
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_styles/panel = SubResource( 4 )
+
+[node name="TitleLabel" parent="Margin/VB/Body/MapTab/VB" index="0"]
+margin_right = 752.0
+
+[node name="Controls" parent="Margin/VB/Body/MapTab/VB" index="2"]
+margin_top = 440.0
+margin_right = 752.0
+margin_bottom = 464.0
+
+[node name="StatsTab" parent="Margin/VB/Body" instance=ExtResource( 6 )]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_styles/panel = SubResource( 4 )
+
+[node name="OptionsTab" parent="Margin/VB/Body" instance=ExtResource( 5 )]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -10.0
+margin_bottom = -10.0
+custom_styles/panel = SubResource( 4 )
+
+[node name="PlayerImage" parent="Margin/VB/Body/OptionsTab/Margin/HB/CC_PlayerImage/VB_PlayerOverview" index="0"]
+margin_bottom = 272.0
+
+[connection signal="pressed" from="Margin/VB/Headers/InventoryButton" to="." method="_on_InventoryButton_pressed"]
+[connection signal="pressed" from="Margin/VB/Headers/CraftingButton" to="." method="_on_CraftingButton_pressed"]
+[connection signal="pressed" from="Margin/VB/Headers/MapButton" to="." method="_on_MapButton_pressed"]
+[connection signal="pressed" from="Margin/VB/Headers/StatsButton" to="." method="_on_StatsButton_pressed"]
+[connection signal="pressed" from="Margin/VB/Headers/OptionsButton" to="." method="_on_OptionsButton_pressed"]
+
+[editable path="Margin/VB/Body/InventoryTab"]
+[editable path="Margin/VB/Body/CraftingTab"]
+[editable path="Margin/VB/Body/MapTab"]
+[editable path="Margin/VB/Body/StatsTab"]
+[editable path="Margin/VB/Body/OptionsTab"]
